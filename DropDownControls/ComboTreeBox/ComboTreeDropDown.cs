@@ -975,6 +975,20 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	}
 
 	/// <summary>
+	/// Closes the drop-down and ensures all tool-tips are hidden.
+	/// </summary>
+	protected new void Close()
+	{
+		base.Close();
+		// End tooltip timer and hide any lingering tooltips.
+		if (_toolTip != null)
+		{
+			_toolTipTimer.Stop();
+			_toolTip.Hide(this);
+		}
+	}
+
+	/// <summary>
 	/// Calculates the location of the dropdown depending on whether it needs to appear above or below the source control.
 	/// </summary>
 	/// <returns></returns>
@@ -1181,7 +1195,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 
 	void toolTipTimer_Tick(object sender, EventArgs e) {
 		string text = _visibleItems[_highlightedItemIndex].Node.ToolTip;
-		if (!String.IsNullOrEmpty(text)) _toolTip.Show(text, this, PointToClient(Cursor.Position));
+		// Show tool-tip slightly to the side of the mouse position to ensure proper visibility of nodes and also avoid bug where item cannot be clicked.
+		if (!String.IsNullOrEmpty(text)) _toolTip.Show(text, this, PointToClient(new Point(Cursor.Position.X + 50, Cursor.Position.Y)));
 		_toolTipTimer.Stop();
 	}
 

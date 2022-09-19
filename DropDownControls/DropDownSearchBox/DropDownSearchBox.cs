@@ -82,7 +82,8 @@ public class DropDownSearchBox : ComboTreeBox {
 	public DropDownSearchBox() {
 		_services = new TextServices(this, GetTextBoxBounds);
 		DropDownStyle = DropDownControlStyles.FakeEditable;
-		ShowGlyphs = false;
+		// Allowing glyphs to be shown in drop-down search mode.
+		//ShowGlyphs = false;
 		_normalNodes = new ComboTreeNodeCollection(null);
 		MinSearchTermLength = 3;
 		DropDownHeight = 300;

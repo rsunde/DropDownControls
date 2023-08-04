@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 /// <summary>
 /// Represents a collection of <see cref="ComboTreeNode"/> objects contained 
@@ -133,6 +134,53 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 
 		return false;
 	}
+
+   /// <summary>
+   /// Converts a TreeNodeCollection to a ComboTreeNodeCollection
+   /// </summary>
+   /// <param name="tnc"></param>
+   /// <returns></returns>
+   public static ComboTreeNodeCollection ConvertFromTreeNodeCollection(TreeNodeCollection tnc)
+   {
+      ComboTreeNodeCollection ctnc = null;
+      for (int i = 0; i < tnc.Count; i++)
+      {
+         TreeNode tn = tnc[i];
+         ComboTreeNode ctn = new ComboTreeNode();
+         ctn.Text = tn.Text;
+         ctn.Tag = tn.Tag;
+         ctn.Name = tn.Name;
+         ctn.Expanded = tn.IsExpanded;
+         ctn.Nodes.AddRange(ConvertFromTreeNodeCollection(tn.Nodes));
+         ctn.Parent = ConvertFromTreeNode(tn.Parent);
+         ctn.ToolTip = tn.ToolTipText;
+         ctn.Checked = tn.Checked;
+         if (ctnc == null)
+            ctnc = new ComboTreeNodeCollection(ctn);
+         else
+            ctnc.Add(ctn);
+      }
+      return ctnc;
+   }
+
+   /// <summary>
+   /// Converts a TreeNode to a ComboTreeNode
+   /// </summary>
+   /// <param name="tn"></param>
+   /// <returns></returns>
+   public static ComboTreeNode ConvertFromTreeNode(TreeNode tn)
+   {
+      ComboTreeNode ctn = new ComboTreeNode();
+      ctn.Text = tn.Text;
+      ctn.Tag = tn.Tag;
+      ctn.Name = tn.Name;
+      ctn.Expanded = tn.IsExpanded;
+      ctn.Nodes.AddRange(ConvertFromTreeNodeCollection(tn.Nodes));
+      ctn.Parent = ConvertFromTreeNode(tn.Parent);
+      ctn.ToolTip = tn.ToolTipText;
+      ctn.Checked = tn.Checked;
+      return ctn;
+   }
 
 	/// <summary>
 	/// Returns the index of the node with the specified name.

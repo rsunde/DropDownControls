@@ -1049,7 +1049,6 @@ public class ComboTreeBox : DropDownControlBase
 		foreach (ComboTreeNode node in AllNodes) node.Checked = false;
 	}
 
-	void dropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e) {
 	/// <summary>
 	/// Updates the Checked property of all child nodes
 	/// </summary>

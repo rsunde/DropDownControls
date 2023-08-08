@@ -74,7 +74,7 @@
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(3, 177);
+            label1.Location = new Point(3, 172);
             label1.Name = "label1";
             label1.Size = new Size(235, 33);
             label1.TabIndex = 8;
@@ -85,7 +85,7 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(3, 144);
+            label2.Location = new Point(3, 139);
             label2.Name = "label2";
             label2.Size = new Size(235, 33);
             label2.TabIndex = 6;
@@ -175,7 +175,7 @@
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Fill;
-            label3.Location = new Point(3, 210);
+            label3.Location = new Point(3, 205);
             label3.Name = "label3";
             label3.Size = new Size(235, 32);
             label3.TabIndex = 12;
@@ -186,7 +186,7 @@
             // 
             label4.AutoSize = true;
             label4.Dock = DockStyle.Fill;
-            label4.Location = new Point(3, 274);
+            label4.Location = new Point(3, 269);
             label4.Name = "label4";
             label4.Size = new Size(235, 32);
             label4.TabIndex = 16;
@@ -197,7 +197,7 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Fill;
-            label5.Location = new Point(3, 242);
+            label5.Location = new Point(3, 237);
             label5.Name = "label5";
             label5.Size = new Size(235, 32);
             label5.TabIndex = 14;
@@ -208,7 +208,7 @@
             // 
             label8.AutoSize = true;
             label8.Dock = DockStyle.Fill;
-            label8.Location = new Point(3, 306);
+            label8.Location = new Point(3, 301);
             label8.Name = "label8";
             label8.Size = new Size(235, 32);
             label8.TabIndex = 18;
@@ -219,7 +219,7 @@
             // 
             label9.AutoSize = true;
             label9.Dock = DockStyle.Fill;
-            label9.Location = new Point(3, 338);
+            label9.Location = new Point(3, 333);
             label9.Name = "label9";
             label9.Size = new Size(235, 32);
             label9.TabIndex = 20;
@@ -230,7 +230,7 @@
             // 
             label10.AutoSize = true;
             label10.Dock = DockStyle.Fill;
-            label10.Location = new Point(3, 399);
+            label10.Location = new Point(3, 394);
             label10.Name = "label10";
             label10.Size = new Size(235, 32);
             label10.TabIndex = 23;
@@ -241,7 +241,7 @@
             // 
             chkRetainGroups.AutoSize = true;
             chkRetainGroups.Dock = DockStyle.Fill;
-            chkRetainGroups.Location = new Point(244, 373);
+            chkRetainGroups.Location = new Point(244, 368);
             chkRetainGroups.Name = "chkRetainGroups";
             chkRetainGroups.Size = new Size(277, 23);
             chkRetainGroups.TabIndex = 22;
@@ -324,7 +324,7 @@
             dsbExternal.DropDownHeight = 300;
             dsbExternal.DroppedDown = false;
             dsbExternal.HotToNormal = 0;
-            dsbExternal.Location = new Point(244, 402);
+            dsbExternal.Location = new Point(244, 397);
             dsbExternal.Name = "dsbExternal";
             dsbExternal.NormalToHot = 0;
             dsbExternal.PressedToNormal = 0;
@@ -332,7 +332,6 @@
             dsbExternal.ShowGlyphs = false;
             dsbExternal.Size = new Size(277, 26);
             dsbExternal.TabIndex = 10;
-            dsbExternal.Visible = false;
             // 
             // dsbListItems
             // 
@@ -340,7 +339,7 @@
             dsbListItems.DropDownHeight = 300;
             dsbListItems.DroppedDown = false;
             dsbListItems.HotToNormal = 0;
-            dsbListItems.Location = new Point(244, 341);
+            dsbListItems.Location = new Point(244, 336);
             dsbListItems.Name = "dsbListItems";
             dsbListItems.NormalToHot = 0;
             dsbListItems.PressedToNormal = 0;
@@ -348,7 +347,6 @@
             dsbListItems.ShowGlyphs = false;
             dsbListItems.Size = new Size(277, 26);
             dsbListItems.TabIndex = 9;
-            dsbListItems.Visible = false;
             // 
             // dataGridView1
             // 
@@ -357,12 +355,11 @@
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
             tableLayoutPanel1.SetColumnSpan(dataGridView1, 2);
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(3, 454);
+            dataGridView1.Location = new Point(3, 444);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(518, 136);
+            dataGridView1.Size = new Size(518, 162);
             dataGridView1.TabIndex = 25;
-            dataGridView1.Visible = false;
             // 
             // Column1
             // 
@@ -386,7 +383,7 @@
             ctbFlatChecks.Dock = DockStyle.Fill;
             ctbFlatChecks.DroppedDown = false;
             ctbFlatChecks.HotToNormal = 0;
-            ctbFlatChecks.Location = new Point(244, 309);
+            ctbFlatChecks.Location = new Point(244, 304);
             ctbFlatChecks.Name = "ctbFlatChecks";
             ctbFlatChecks.NormalToHot = 0;
             ctbFlatChecks.PressedToNormal = 0;
@@ -394,7 +391,6 @@
             ctbFlatChecks.ShowCheckBoxes = true;
             ctbFlatChecks.Size = new Size(277, 26);
             ctbFlatChecks.TabIndex = 8;
-            ctbFlatChecks.Visible = false;
             // 
             // ctbImages
             // 
@@ -403,21 +399,20 @@
             ctbImages.ExpandedImageIndex = 1;
             ctbImages.HotToNormal = 0;
             ctbImages.Images = imageList;
-            ctbImages.Location = new Point(244, 245);
+            ctbImages.Location = new Point(244, 240);
             ctbImages.Name = "ctbImages";
             ctbImages.NormalToHot = 0;
             ctbImages.PressedToNormal = 0;
             ctbImages.SelectedNode = null;
             ctbImages.Size = new Size(277, 26);
             ctbImages.TabIndex = 6;
-            ctbImages.Visible = false;
             // 
             // ctbCheckboxes
             // 
             ctbCheckboxes.Dock = DockStyle.Fill;
             ctbCheckboxes.DroppedDown = false;
             ctbCheckboxes.HotToNormal = 0;
-            ctbCheckboxes.Location = new Point(244, 277);
+            ctbCheckboxes.Location = new Point(244, 272);
             ctbCheckboxes.Name = "ctbCheckboxes";
             ctbCheckboxes.NormalToHot = 0;
             ctbCheckboxes.PressedToNormal = 0;
@@ -425,7 +420,6 @@
             ctbCheckboxes.ShowCheckBoxes = true;
             ctbCheckboxes.Size = new Size(277, 26);
             ctbCheckboxes.TabIndex = 7;
-            ctbCheckboxes.Visible = false;
             // 
             // gcbList
             // 
@@ -436,7 +430,7 @@
             gcbList.FormattingEnabled = true;
             gcbList.HotToNormal = 1;
             gcbList.IntegralHeight = false;
-            gcbList.Location = new Point(244, 147);
+            gcbList.Location = new Point(244, 142);
             gcbList.Name = "gcbList";
             gcbList.NormalToHot = 2;
             gcbList.PressedToNormal = 3;
@@ -451,7 +445,7 @@
             gcbEditable.FormattingEnabled = true;
             gcbEditable.HotToNormal = 0;
             gcbEditable.IntegralHeight = false;
-            gcbEditable.Location = new Point(244, 180);
+            gcbEditable.Location = new Point(244, 175);
             gcbEditable.Name = "gcbEditable";
             gcbEditable.NormalToHot = 0;
             gcbEditable.PressedToNormal = 0;
@@ -463,14 +457,13 @@
             ctbNormal.Dock = DockStyle.Fill;
             ctbNormal.DroppedDown = false;
             ctbNormal.HotToNormal = 0;
-            ctbNormal.Location = new Point(244, 213);
+            ctbNormal.Location = new Point(244, 208);
             ctbNormal.Name = "ctbNormal";
             ctbNormal.NormalToHot = 0;
             ctbNormal.PressedToNormal = 0;
             ctbNormal.SelectedNode = null;
             ctbNormal.Size = new Size(277, 26);
             ctbNormal.TabIndex = 5;
-            ctbNormal.Visible = false;
             // 
             // tableLayoutPanel1
             // 
@@ -513,7 +506,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -524,17 +517,16 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(524, 585);
+            tableLayoutPanel1.Size = new Size(524, 609);
             tableLayoutPanel1.TabIndex = 26;
             // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(524, 585);
+            ClientSize = new Size(524, 609);
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             FormBorderStyle = FormBorderStyle.FixedSingle;

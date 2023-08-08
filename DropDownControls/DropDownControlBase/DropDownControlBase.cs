@@ -106,10 +106,19 @@ public abstract class DropDownControlBase : Control {
 		}
 	}
 
-	/// <summary>
-	/// Fired when the user clicks the dropdown button at the right edge of the control.
-	/// </summary>
-	[Description("Occurs when the user clicks the dropdown button at the right edge of the control.")]
+    [DefaultValue(250), Category("Misc - Transition")]
+    public int NormalToHot { get; set; }
+
+    [DefaultValue(350), Category("Misc - Transition")]
+    public int HotToNormal { get; set; }
+
+    [DefaultValue(350), Category("Misc - Transition")]
+    public int PressedToNormal { get; set; }
+
+    /// <summary>
+    /// Fired when the user clicks the dropdown button at the right edge of the control.
+    /// </summary>
+    [Description("Occurs when the user clicks the dropdown button at the right edge of the control.")]
 	protected event EventHandler DropDownButtonClick;
 	/// <summary>
 	/// Fired when the drop-down portion of the control is displayed.
@@ -155,9 +164,9 @@ public abstract class DropDownControlBase : Control {
 		_bufferedPainter = new BufferedPainter<ComboBoxState>(this);
 		_bufferedPainter.PaintVisualState += new EventHandler<BufferedPaintEventArgs<ComboBoxState>>(bufferedPainter_PaintVisualState);
 		_bufferedPainter.State = _bufferedPainter.DefaultState = ComboBoxState.Normal;
-		_bufferedPainter.AddTransition(ComboBoxState.Normal, ComboBoxState.Hot, 250);
-		_bufferedPainter.AddTransition(ComboBoxState.Hot, ComboBoxState.Normal, 350);
-		_bufferedPainter.AddTransition(ComboBoxState.Pressed, ComboBoxState.Normal, 350);
+		_bufferedPainter.AddTransition(ComboBoxState.Normal, ComboBoxState.Hot, NormalToHot);
+		_bufferedPainter.AddTransition(ComboBoxState.Hot, ComboBoxState.Normal, HotToNormal);
+		_bufferedPainter.AddTransition(ComboBoxState.Pressed, ComboBoxState.Normal, PressedToNormal);
 	}
 
 	/// <summary>
@@ -550,10 +559,9 @@ public abstract class DropDownControlBase : Control {
 	void bufferedPainter_PaintVisualState(object sender, BufferedPaintEventArgs<ComboBoxState> e) {
 		if (_drawWithVisualStyles && _bufferedPainter.BufferedPaintSupported && _bufferedPainter.Enabled && (_style == DropDownControlStyles.Discrete)) {
 			// draw in the vista/win7 style
-			VisualStyleRenderer r = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
-			r.DrawParentBackground(e.Graphics, ClientRectangle, this);
+			ButtonRenderer.DrawParentBackground(e.Graphics, ClientRectangle, this);
 
-			Rectangle buttonBounds = ClientRectangle;
+            Rectangle buttonBounds = ClientRectangle;
 			buttonBounds.Inflate(1, 1);
 			ButtonRenderer.DrawButton(e.Graphics, buttonBounds, GetPushButtonState(e.State));
 

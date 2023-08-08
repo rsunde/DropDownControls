@@ -223,10 +223,19 @@ public class GroupedComboBox : ComboBox, IComparer {
 		}
 	}
 
-	/// <summary>
-	/// Initialises a new instance of the GroupedComboBox class.
-	/// </summary>
-	public GroupedComboBox() {
+	[DefaultValue(250), Category("Misc - Transition")]
+	public int NormalToHot { get; set; }
+    
+	[DefaultValue(350), Category("Misc - Transition")]
+    public int HotToNormal { get; set; }
+    
+	[DefaultValue(350), Category("Misc - Transition")]
+    public int PressedToNormal { get; set; }
+
+    /// <summary>
+    /// Initialises a new instance of the GroupedComboBox class.
+    /// </summary>
+    public GroupedComboBox() {
 		base.DrawMode = DrawMode.OwnerDrawVariable;
 		_groupMember = String.Empty;
 		_sortMode = GroupItemSortModes.Display;
@@ -237,9 +246,9 @@ public class GroupedComboBox : ComboBox, IComparer {
         _bufferedPainter = new BufferedPainter<ComboBoxState>(this);
         _bufferedPainter.DefaultState = ComboBoxState.Normal;
         _bufferedPainter.PaintVisualState += new EventHandler<BufferedPaintEventArgs<ComboBoxState>>(_bufferedPainter_PaintVisualState);
-        _bufferedPainter.AddTransition(ComboBoxState.Normal, ComboBoxState.Hot, 250);
-        _bufferedPainter.AddTransition(ComboBoxState.Hot, ComboBoxState.Normal, 350);
-        _bufferedPainter.AddTransition(ComboBoxState.Pressed, ComboBoxState.Normal, 350);
+        _bufferedPainter.AddTransition(ComboBoxState.Normal, ComboBoxState.Hot, NormalToHot);
+        _bufferedPainter.AddTransition(ComboBoxState.Hot, ComboBoxState.Normal, HotToNormal);
+        _bufferedPainter.AddTransition(ComboBoxState.Pressed, ComboBoxState.Normal, PressedToNormal);
 
         ToggleStyle();
 	}
@@ -730,8 +739,7 @@ public class GroupedComboBox : ComboBox, IComparer {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     void _bufferedPainter_PaintVisualState(object sender, BufferedPaintEventArgs<ComboBoxState> e) {
-		VisualStyleRenderer r = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
-		r.DrawParentBackground(e.Graphics, ClientRectangle, this);
+		ButtonRenderer.DrawParentBackground(e.Graphics, ClientRectangle, this);
 		
 		DrawComboBox(e.Graphics, ClientRectangle, e.State);
 

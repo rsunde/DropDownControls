@@ -435,7 +435,7 @@ public class DropDownTimePicker : DropDownControlBase, ITimePicker {
 	/// <param name="chkBounds"></param>
 	/// <returns></returns>
 	private System.Windows.Forms.VisualStyles.CheckBoxState GetCheckBoxState(Rectangle chkBounds) {
-		bool isChecked = DroppedDown ? _dropDown.Value.HasValue : Value.HasValue;
+		var isChecked = DroppedDown ? _dropDown.Value.HasValue : Value.HasValue;
 		
 		if (!Enabled) {
 			// disabled
@@ -504,14 +504,14 @@ public class DropDownTimePicker : DropDownControlBase, ITimePicker {
 				Rectangle r = ClientRectangle;
 				r.Width--;
 				r.Height--;
-				using (Pen pen = new Pen(WinVistaColorTable.HotBorder)) {					
+				using (var pen = new Pen(WinVistaColorTable.HotBorder)) {					
 					e.Graphics.DrawRectangle(pen, r);
 				}
 			}
 			_services.DrawText(e.Graphics);
 		}
 		else {
-			string text = DroppedDown ? Format(_dropDown.Value) : Text;
+			var text = DroppedDown ? Format(_dropDown.Value) : Text;
 
 			TextRenderer.DrawText(e.Graphics, text, Font, txtBounds, Enabled ? ForeColor : SystemColors.GrayText, TEXT_FORMAT_FLAGS);
 

@@ -120,16 +120,16 @@ namespace DropDownControls {
 		/// </summary>
 		/// <returns></returns>
 		public override object Clone() {
-			ComboTreeBoxColumn that = (ComboTreeBoxColumn)base.Clone();
-			that.Nodes.AddRange(this.Nodes);
-			that.UseNodeNamesForPath = this.UseNodeNamesForPath;
-			that.PathSeparator = this.PathSeparator;
-			that.ShowPath = this.ShowPath;
-			that.Images = this.Images;
-			that.ImageIndex = this.ImageIndex;
-			that.ImageKey = this.ImageKey;
-			that.ExpandedImageIndex = this.ExpandedImageIndex;
-			that.ExpandedImageKey = this.ExpandedImageKey;
+			var that = (ComboTreeBoxColumn)base.Clone();
+			that.Nodes.AddRange(Nodes);
+			that.UseNodeNamesForPath = UseNodeNamesForPath;
+			that.PathSeparator = PathSeparator;
+			that.ShowPath = ShowPath;
+			that.Images = Images;
+			that.ImageIndex = ImageIndex;
+			that.ImageKey = ImageKey;
+			that.ExpandedImageIndex = ExpandedImageIndex;
+			that.ExpandedImageKey = ExpandedImageKey;
 			return that;
 		}
 	}
@@ -218,9 +218,9 @@ namespace DropDownControls {
 		/// </summary>
 		/// <returns></returns>
 		public override object Clone() {
-			ComboTreeBoxCell that = (ComboTreeBoxCell)base.Clone();
-			that.UseColumnNodes = this.UseColumnNodes;
-			that._nodes.AddRange(this._nodes);
+			var that = (ComboTreeBoxCell)base.Clone();
+			that.UseColumnNodes = UseColumnNodes;
+			that._nodes.AddRange(_nodes);
 			return that;
 		}
 
@@ -233,8 +233,8 @@ namespace DropDownControls {
 		public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle) {
 			base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
 
-			ComboTreeBoxEditingControl control = DataGridView.EditingControl as ComboTreeBoxEditingControl;
-			ComboTreeBoxColumn column = (ComboTreeBoxColumn)OwningColumn;
+			var control = DataGridView.EditingControl as ComboTreeBoxEditingControl;
+			var column = (ComboTreeBoxColumn)OwningColumn;
 
 			if (control != null) {
 				control.BeginUpdate();
@@ -271,7 +271,7 @@ namespace DropDownControls {
 			BeforePaintContent(graphics, cellBounds, cellState, cellStyle, paintParts);
 
 			if (paintParts.HasFlag(DataGridViewPaintParts.ContentForeground)) {
-				ComboTreeBoxColumn column = (ComboTreeBoxColumn)OwningColumn;
+				var column = (ComboTreeBoxColumn)OwningColumn;
 				ComboTreeNode node = Nodes.ParsePath(Convert.ToString(formattedValue), column.PathSeparator, column.UseNodeNamesForPath);
 				string displayValue;
 
@@ -290,7 +290,7 @@ namespace DropDownControls {
 					? new Rectangle(Point.Add(contentBounds.Location, new Size(1,0)), Size.Empty) 
 					: new Rectangle(contentBounds.Left + 4, contentBounds.Top + (contentBounds.Height / 2 - img.Height / 2), img.Width, img.Height);
 
-				Rectangle txtBounds = new Rectangle(imgBounds.Right, contentBounds.Top, contentBounds.Right - imgBounds.Right - 3, contentBounds.Height);
+				var txtBounds = new Rectangle(imgBounds.Right, contentBounds.Top, contentBounds.Right - imgBounds.Right - 3, contentBounds.Height);
 
 				if (img != null) graphics.DrawImage(img, imgBounds);
 
@@ -321,7 +321,7 @@ namespace DropDownControls {
 
 			// background colour
 			if (dataGridViewCellStyle.BackColor.A < 255) {
-				Color opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
+				var opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
 				BackColor = opaqueBackColor;
 				((IDataGridViewEditingControl)this).EditingControlDataGridView.EditingPanel.BackColor = opaqueBackColor;
 			}
@@ -343,7 +343,7 @@ namespace DropDownControls {
 				return ((IDataGridViewEditingControl)this).GetEditingControlFormattedValue(DataGridViewDataErrorContexts.Formatting);
 			}
 			set {
-				string valueStr = value as string;				
+				var valueStr = value as string;				
 				if (valueStr != null) Path = valueStr;
 			}
 		}

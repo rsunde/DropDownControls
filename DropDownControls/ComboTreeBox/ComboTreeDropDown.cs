@@ -55,8 +55,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		get {
 			if (_collapsed == null) {
 				_collapsed = new Bitmap(16, 16);
-				Graphics g = Graphics.FromImage(_collapsed);
-				Rectangle r = new Rectangle(4, 4, 8, 8);
+				var g = Graphics.FromImage(_collapsed);
+				var r = new Rectangle(4, 4, 8, 8);
 				g.FillRectangle(Brushes.White, r);
 				g.DrawRectangle(Pens.Gray, r);
 				g.DrawLine(Pens.Black, Point.Add(r.Location, new Size(2, 4)), Point.Add(r.Location, new Size(6, 4)));
@@ -102,8 +102,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		get {
 			if (_expanded == null) {
 				_expanded = new Bitmap(16, 16);
-				Graphics g = Graphics.FromImage(_expanded);
-				Rectangle r = new Rectangle(4, 4, 8, 8);
+				var g = Graphics.FromImage(_expanded);
+				var r = new Rectangle(4, 4, 8, 8);
 				g.FillRectangle(Brushes.White, r);
 				g.DrawRectangle(Pens.Gray, r);
 				g.DrawLine(Pens.Black, Point.Add(r.Location, new Size(2, 4)), Point.Add(r.Location, new Size(6, 4)));
@@ -127,7 +127,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 			return _visibleItems[_scrollOffset].Node;
 		}
 		set {
-			for (int i = 0; i < _visibleItems.Count; i++) {
+			for (var i = 0; i < _visibleItems.Count; i++) {
 				if (_visibleItems[i].Node == value) {
 					if ((i < _scrollOffset) || (i >= (_scrollOffset + _numItemsDisplayed))) {
 						_scrollOffset = Math.Min(Math.Max(0, i - _numItemsDisplayed + 1), _visibleItems.Count - _numItemsDisplayed);
@@ -162,7 +162,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		_scrollBar = new ScrollBarInfo();
 		_processKeys = true;
 		AutoSize = false;
-		this._sourceControl = sourceControl;
+		_sourceControl = sourceControl;
         RenderMode = ToolStripRenderMode.System;
 		BackColor = Color.White;
         _dropDownHeight = DEFAULT_DROPDOWN_HEIGHT;
@@ -185,14 +185,14 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	/// <param name="nodeImage"></param>
 	/// <returns></returns>
 	private Image GenerateBitmap(BitmapInfo bitmapInfo, Image nodeImage) {
-		int indentation = INDENT_WIDTH * bitmapInfo.NodeDepth;
-		int halfIndent = INDENT_WIDTH / 2;
-		int halfHeight = _itemHeight / 2;
+		var indentation = INDENT_WIDTH * bitmapInfo.NodeDepth;
+		var halfIndent = INDENT_WIDTH / 2;
+		var halfHeight = _itemHeight / 2;
 
-		int bmpWidth = indentation;
-		int connectorMargin = 1;
+		var bmpWidth = indentation;
+		var connectorMargin = 1;
 
-		bool drawConnectors = _sourceControl.ConnectorsNeeded;
+		var drawConnectors = _sourceControl.ConnectorsNeeded;
 		if (drawConnectors) connectorMargin = INDENT_WIDTH;
 
 		bmpWidth += connectorMargin;
@@ -205,10 +205,10 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		if (bmpWidth == 0) return null;
 
 		// create a bitmap that will be composed of the node's image and the glyphs/lines/indentation
-		Bitmap composite = new Bitmap(bmpWidth, _itemHeight);
-		using (Graphics g = Graphics.FromImage(composite)) {
+		var composite = new Bitmap(bmpWidth, _itemHeight);
+		using (var g = Graphics.FromImage(composite)) {
 			if (drawConnectors) {
-				using (Pen dotted = new Pen(Color.Gray)) {
+				using (var dotted = new Pen(Color.Gray)) {
 					dotted.DashStyle = DashStyle.Dot;
 
 					// horizontal dotted line
@@ -221,9 +221,9 @@ public class ComboTreeDropDown : ToolStripDropDown {
 					if (bitmapInfo.NodeExpanded) g.DrawLine(dotted, INDENT_WIDTH + indentation + halfIndent, halfHeight, INDENT_WIDTH + indentation + halfIndent, _itemHeight);
 
 					// outer vertical dotted lines
-					for (int i = 0; i < bitmapInfo.VerticalLines.Length; i++) {
+					for (var i = 0; i < bitmapInfo.VerticalLines.Length; i++) {
 						if (bitmapInfo.VerticalLines[i]) {
-							int parentIndent = (INDENT_WIDTH * (bitmapInfo.NodeDepth - (i + 1)));
+							var parentIndent = (INDENT_WIDTH * (bitmapInfo.NodeDepth - (i + 1)));
 							g.DrawLine(dotted, parentIndent + halfIndent, 0, parentIndent + halfIndent, _itemHeight);
 						}
 					}
@@ -245,12 +245,12 @@ public class ComboTreeDropDown : ToolStripDropDown {
 
 			// render plus/minus glyphs
 			if (drawConnectors && bitmapInfo.HasChildren) {
-				Rectangle glyphBounds = new Rectangle(indentation, composite.Height / 2 - GLYPH_SIZE / 2, GLYPH_SIZE, GLYPH_SIZE);
+				var glyphBounds = new Rectangle(indentation, composite.Height / 2 - GLYPH_SIZE / 2, GLYPH_SIZE, GLYPH_SIZE);
 				VisualStyleElement elem = bitmapInfo.NodeExpanded ? VisualStyleElement.TreeView.Glyph.Opened : VisualStyleElement.TreeView.Glyph.Closed;
 
 				if (_sourceControl.DrawWithVisualStyles && VisualStyleRenderer.IsSupported && VisualStyleRenderer.IsElementDefined(elem)) {
 					// visual style support, render using visual styles
-					VisualStyleRenderer r = new VisualStyleRenderer(elem);
+					var r = new VisualStyleRenderer(elem);
 					r.DrawBackground(g, glyphBounds);
 				}
 				else {
@@ -284,8 +284,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	/// <param name="bounds"></param>
 	/// <returns></returns>
 	private CheckBoxState GetCheckBoxState(CheckState checkState, Rectangle bounds) {
-		bool mouseOver = bounds.Contains(PointToClient(Cursor.Position));
-		bool mouseDown = ((MouseButtons & MouseButtons.Left) == MouseButtons.Left);
+		var mouseOver = bounds.Contains(PointToClient(Cursor.Position));
+		var mouseDown = ((MouseButtons & MouseButtons.Left) == MouseButtons.Left);
 
 		switch (checkState) {
 			case CheckState.Checked:
@@ -332,7 +332,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	/// <param name="node"></param>
 	/// <returns></returns>
 	private Image GetItemBitmap(ComboTreeNode node) {
-		BitmapInfo bitmapInfo = new BitmapInfo();
+		var bitmapInfo = new BitmapInfo();
 	
 		// the following factors determine the bitmap drawn:
 		ComboTreeNodeCollection collection = GetCollectionContainingNode(node);
@@ -346,7 +346,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 
 		bitmapInfo.VerticalLines = new bool[bitmapInfo.NodeDepth];
 		ComboTreeNode parent = node;
-		int i = 0;
+		var i = 0;
 		while ((parent = parent.Parent) != null) {
 			// vertical line required if parent is expanded (and not last peer)
 			ComboTreeNodeCollection parentCollection = GetCollectionContainingNode(parent);
@@ -635,7 +635,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		// dragging with the scrollbar's 'thumb' button
 		if (_scrollDragging) {
 			double availableHeight = _scrollBar.DisplayRectangle.Height - (2 * SCROLLBUTTON_SIZE.Height) - _scrollBar.Thumb.Height;
-			double position = Math.Min(e.Location.Y - _scrollBar.DisplayRectangle.Top - SCROLLBUTTON_SIZE.Height - (_scrollBar.Thumb.Height / 2), availableHeight);
+			var position = Math.Min(e.Location.Y - _scrollBar.DisplayRectangle.Top - SCROLLBUTTON_SIZE.Height - (_scrollBar.Thumb.Height / 2), availableHeight);
 
 			// measure the scroll offset based on the location of the mouse pointer, relative to the scrollbar's bounds
 			_scrollOffset = Math.Max(0, Math.Min(
@@ -660,8 +660,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		_scrollRepeater.Stop();		
 
 		// hit-test each displayed item's bounds to determine the highlighted item
-		bool isHit = false;
-		for (int i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
+		var isHit = false;
+		for (var i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
 			if (_visibleItems[i].DisplayRectangle.Contains(e.Location)) {
 				if (_highlightedItemIndex != i) {
 					// highlighted item changed, reset tooltip timer
@@ -695,7 +695,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		if (_scrollBarVisible && _scrollBar.DisplayRectangle.Contains(e.Location)) {
 			if (e.Y > _scrollBar.Thumb.Bottom) {
 				// any point below the thumb button requires scrolling - on bar = pagedown, on button = next
-				int step = (_scrollBar.DownArrow.Contains(e.Location)) ? 1 : _numItemsDisplayed;
+				var step = (_scrollBar.DownArrow.Contains(e.Location)) ? 1 : _numItemsDisplayed;
 				ScrollDropDown(step);
 
 				// if the button is held, start auto-repeat behaviour
@@ -707,7 +707,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 			}
 			else if (e.Y < _scrollBar.Thumb.Top) {
 				// any point above the thumb button requires scrolling - on bar = pagedown, on button = next
-				int step = (_scrollBar.UpArrow.Contains(e.Location)) ? 1 : _numItemsDisplayed;
+				var step = (_scrollBar.UpArrow.Contains(e.Location)) ? 1 : _numItemsDisplayed;
 				ScrollDropDown(-step);
 
 				// if the button is held, start auto-repeat behaviour
@@ -755,7 +755,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		if (_scrollDragging) return;
 
 		if (e.Button == System.Windows.Forms.MouseButtons.Left) {
-			for (int i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
+			for (var i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
 				NodeInfo info = _visibleItems[i];
 
 				if (info.DisplayRectangle.Contains(e.Location)) {
@@ -838,7 +838,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	protected override void OnMouseWheel(MouseEventArgs e) {
 		base.OnMouseWheel(e);
 
-		HandledMouseEventArgs he = e as HandledMouseEventArgs;
+		var he = e as HandledMouseEventArgs;
 		if (he != null) he.Handled = true;
 		
 		if (e.Delta > 0) {
@@ -860,8 +860,8 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		base.OnPaint(e);
 
 		if (_scrollBarVisible) {
-			Rectangle upper = new Rectangle(_scrollBar.DisplayRectangle.Left, _scrollBar.DisplayRectangle.Top, _scrollBar.DisplayRectangle.Width, _scrollBar.Thumb.Top - _scrollBar.DisplayRectangle.Top);
-			Rectangle lower = new Rectangle(_scrollBar.DisplayRectangle.Left, _scrollBar.Thumb.Bottom, _scrollBar.DisplayRectangle.Width, _scrollBar.DisplayRectangle.Bottom - _scrollBar.Thumb.Bottom);
+			var upper = new Rectangle(_scrollBar.DisplayRectangle.Left, _scrollBar.DisplayRectangle.Top, _scrollBar.DisplayRectangle.Width, _scrollBar.Thumb.Top - _scrollBar.DisplayRectangle.Top);
+			var lower = new Rectangle(_scrollBar.DisplayRectangle.Left, _scrollBar.Thumb.Bottom, _scrollBar.DisplayRectangle.Width, _scrollBar.DisplayRectangle.Bottom - _scrollBar.Thumb.Bottom);
 
 			if (_sourceControl.DrawWithVisualStyles && ScrollBarRenderer.IsSupported) {
 				ScrollBarRenderer.DrawUpperVerticalTrack(e.Graphics, upper, GetScrollBarState(upper));
@@ -881,7 +881,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 				Rectangle thumb = _scrollBar.Thumb;
 				thumb.Offset(1, 0);
 
-				using (HatchBrush brush = new HatchBrush(HatchStyle.Percent50, SystemColors.ControlLightLight, SystemColors.Control)) {
+				using (var brush = new HatchBrush(HatchStyle.Percent50, SystemColors.ControlLightLight, SystemColors.Control)) {
 					e.Graphics.FillRectangle(brush, bounds);
 				}
 
@@ -891,18 +891,18 @@ public class ComboTreeDropDown : ToolStripDropDown {
 			}
 		}
 
-		for (int i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
+		for (var i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
 			NodeInfo item = _visibleItems[i];
-			bool highlighted = ((_highlightedItemIndex == i) && item.Node.Selectable);
-			bool focusable = (_highlightedItemIndex == i);
+			var highlighted = ((_highlightedItemIndex == i) && item.Node.Selectable);
+			var focusable = (_highlightedItemIndex == i);
 
 			// background
 			if (highlighted) e.Graphics.FillRectangle(SystemBrushes.Highlight, item.DisplayRectangle);
 
-			Rectangle textBounds = new Rectangle(item.DisplayRectangle.X + item.Image.Width + 2, item.DisplayRectangle.Y, item.DisplayRectangle.Width - item.Image.Width - 4, _itemHeight);
+			var textBounds = new Rectangle(item.DisplayRectangle.X + item.Image.Width + 2, item.DisplayRectangle.Y, item.DisplayRectangle.Width - item.Image.Width - 4, _itemHeight);
 
 			// image and glyphs
-			Rectangle imgBounds = new Rectangle(item.DisplayRectangle.Location, item.Image.Size);
+			var imgBounds = new Rectangle(item.DisplayRectangle.Location, item.Image.Size);
 			e.Graphics.DrawImage(item.Image, imgBounds);
 
 			if (_sourceControl.ShowCheckBoxes) {
@@ -911,7 +911,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 				CheckBoxRenderer.DrawCheckBox(e.Graphics, Point.Add(item.CheckRectangle.Location, new Size((item.CheckRectangle.Width - chkSize.Width) / 2, (item.CheckRectangle.Height - chkSize.Height) / 2)), state);
 			}
 
-			using (Font font = new Font(Font, item.Node.FontStyle)) {
+			using (var font = new Font(Font, item.Node.FontStyle)) {
 				OnDrawNode(new ComboTreeNodePaintEventArgs(e.Graphics, item.Node, item.DisplayRectangle, textBounds, font, highlighted));
 			}
 
@@ -993,7 +993,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	/// </summary>
 	/// <returns></returns>
 	private Point CalcDropDownLocation() {
-		Point location = new Point(0, _sourceControl.ClientRectangle.Height);
+		var location = new Point(0, _sourceControl.ClientRectangle.Height);
 		Rectangle workingArea = Screen.FromControl(_sourceControl).WorkingArea;
 
 		if ((_sourceControl.PointToScreen(location).Y + Height) > workingArea.Bottom) {
@@ -1016,7 +1016,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	/// </summary>
 	/// <param name="node"></param>
 	private void ScrollTo(ComboTreeNode node) {
-		for (int i = 0; i < _visibleItems.Count; i++) {
+		for (var i = 0; i < _visibleItems.Count; i++) {
 			if (_visibleItems[i].Node == node) {
 				_highlightedItemIndex = i;
 				if ((_highlightedItemIndex < _scrollOffset) || (_highlightedItemIndex >= (_scrollOffset + _numItemsDisplayed))) {
@@ -1070,29 +1070,29 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	private void UpdateScrolling() {
 		if (_scrollBarVisible) {
 			// calculate the bounds of the scrollbar's 'thumb' button
-			int availableHeight = _scrollBar.DisplayRectangle.Height - (2 * SCROLLBUTTON_SIZE.Height);
+			var availableHeight = _scrollBar.DisplayRectangle.Height - (2 * SCROLLBUTTON_SIZE.Height);
 
-			double percentSize = (double)_numItemsDisplayed / (double)_visibleItems.Count;
-			int size = Math.Max((int)(percentSize * (double)availableHeight), MIN_THUMB_HEIGHT);
-			int diff = Math.Max(0, MIN_THUMB_HEIGHT - (int)(percentSize * (double)availableHeight));
+			var percentSize = (double)_numItemsDisplayed / (double)_visibleItems.Count;
+			var size = Math.Max((int)(percentSize * (double)availableHeight), MIN_THUMB_HEIGHT);
+			var diff = Math.Max(0, MIN_THUMB_HEIGHT - (int)(percentSize * (double)availableHeight));
 
-			double percentStart = (double)_scrollOffset / (double)_visibleItems.Count;
-			int start = Math.Min((int)Math.Ceiling(percentStart * (double)(availableHeight - diff)), availableHeight - MIN_THUMB_HEIGHT);
+			var percentStart = (double)_scrollOffset / (double)_visibleItems.Count;
+			var start = Math.Min((int)Math.Ceiling(percentStart * (double)(availableHeight - diff)), availableHeight - MIN_THUMB_HEIGHT);
 
 			_scrollBar.Thumb = new Rectangle(new Point(_scrollBar.DisplayRectangle.X, _scrollBar.DisplayRectangle.Top + SCROLLBUTTON_SIZE.Height + start), new Size(SCROLLBAR_WIDTH, size));
 		}
 
 		// calculate display rectangles and assign images for each item in the scroll range
-		for (int i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
+		for (var i = _scrollOffset; i < (_scrollOffset + _numItemsDisplayed); i++) {
 			NodeInfo info = _visibleItems[i];
 			if (info.Image == null) info.Image = GetItemBitmap(info.Node);
 			info.DisplayRectangle = new Rectangle(_interior.X, _interior.Y + (_itemHeight * (i - _scrollOffset)), _interior.Width, _itemHeight);
-			int indentation = (info.Node.Depth * INDENT_WIDTH);
+			var indentation = (info.Node.Depth * INDENT_WIDTH);
 
 			Size imageSize = (info.Image != null) ? info.Image.Size : Size.Empty;
 
 			Image nodeImage = _sourceControl.GetNodeImage(info.Node);
-			int nodeImageWidth = 0;
+			var nodeImageWidth = 0;
 			if (_sourceControl.ShowCheckBoxes) {
 				nodeImageWidth = 16;
 				info.CheckRectangle = new Rectangle(imageSize.Width - nodeImageWidth, info.DisplayRectangle.Top, nodeImageWidth, imageSize.Height);
@@ -1134,7 +1134,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		_highlightedItemIndex = Math.Max(0, Math.Min(_visibleItems.FindIndex(f => f.Node.Selectable), _visibleItems.Count - 1));
 
 		_numItemsDisplayed = Math.Min((_dropDownHeight / _itemHeight) + 1, _visibleItems.Count);
-		int maxHeight = (((_dropDownHeight / _itemHeight) + 1) * _itemHeight) + 2;
+		var maxHeight = (((_dropDownHeight / _itemHeight) + 1) * _itemHeight) + 2;
 
         // dropdown will be at least the width of the source control and at most the assigned height
 		Size = new Size(
@@ -1194,7 +1194,7 @@ public class ComboTreeDropDown : ToolStripDropDown {
 	}
 
 	void toolTipTimer_Tick(object sender, EventArgs e) {
-		string text = _visibleItems[_highlightedItemIndex].Node.ToolTip;
+		var text = _visibleItems[_highlightedItemIndex].Node.ToolTip;
 		// Show tool-tip slightly to the side of the mouse position to ensure proper visibility of nodes and also avoid bug where item cannot be clicked.
 		if (!String.IsNullOrEmpty(text)) _toolTip.Show(text, this, PointToClient(new Point(Cursor.Position.X + 50, Cursor.Position.Y)));
 		_toolTipTimer.Stop();
@@ -1382,25 +1382,25 @@ public class ComboTreeDropDown : ToolStripDropDown {
 		/// <param name="that"></param>
 		/// <returns></returns>
 		public bool Equals(BitmapInfo that) {
-			if (this.HasChildren != that.HasChildren)
+			if (HasChildren != that.HasChildren)
 				return false;
-			if (this.IsLastPeer != that.IsLastPeer)
+			if (IsLastPeer != that.IsLastPeer)
 				return false;
-			if (this.IsFirst != that.IsFirst)
+			if (IsFirst != that.IsFirst)
 				return false;
-			if (this.NodeDepth != that.NodeDepth)
+			if (NodeDepth != that.NodeDepth)
 				return false;
-			if (this.NodeExpanded != that.NodeExpanded)
+			if (NodeExpanded != that.NodeExpanded)
 				return false;
-			if (this.VerticalLines.Length != that.VerticalLines.Length)
+			if (VerticalLines.Length != that.VerticalLines.Length)
 				return false;
-			if (this.ImageIndex != that.ImageIndex)
+			if (ImageIndex != that.ImageIndex)
 				return false;
-			if (this.ImageKey != that.ImageKey)
+			if (ImageKey != that.ImageKey)
 				return false;
 
-			for (int i = 0; i < VerticalLines.Length; i++) {
-				if (this.VerticalLines[i] != that.VerticalLines[i]) return false;
+			for (var i = 0; i < VerticalLines.Length; i++) {
+				if (VerticalLines[i] != that.VerticalLines[i]) return false;
 			}
 
 			return true;

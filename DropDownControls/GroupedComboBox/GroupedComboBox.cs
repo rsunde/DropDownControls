@@ -128,7 +128,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 		}
 		set {
 			// temporarily store the DisplayMember value as it is lost on _internalSource.Dispose()
-			string _displayMember = DisplayMember;
+			var _displayMember = DisplayMember;
 
 			if (_internalSource != null) _internalSource.Dispose();
 			_internalSource = null;
@@ -355,12 +355,12 @@ public class GroupedComboBox : ComboBox, IComparer {
 				break;
 		}
 
-		int secondLevelSort = _sortComparer.Compare(sortValueX, sortValueY);
+		var secondLevelSort = _sortComparer.Compare(sortValueX, sortValueY);
 
 		if (_groupProperty == null) return secondLevelSort;
 
 		// compare the group values - if equal, return the earlier comparison
-		int firstLevelSort = _sortComparer.Compare(
+		var firstLevelSort = _sortComparer.Compare(
 			_groupProperty.GetValue(x),
 			_groupProperty.GetValue(y)		
 		);
@@ -421,7 +421,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 	/// <param name="groupText"></param>
 	/// <returns></returns>
 	private bool IsGroupStart(int index, out string groupText) {
-		bool isGroupStart = false;
+		var isGroupStart = false;
 		groupText = String.Empty;
 
 		if ((_groupProperty != null) && (index >= 0) && (index < Items.Count)) {
@@ -434,7 +434,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 				isGroupStart = true;
 			}
 			else if ((index - 1) >= 0) {
-				string previousGroupText = Convert.ToString(_groupProperty.GetValue(Items[index - 1]));
+				var previousGroupText = Convert.ToString(_groupProperty.GetValue(Items[index - 1]));
 				if (previousGroupText != groupText) isGroupStart = true;
 			}
 		}
@@ -478,16 +478,16 @@ public class GroupedComboBox : ComboBox, IComparer {
 
 		if ((e.Index >= 0) && (e.Index < Items.Count)) {
 			// get noteworthy states
-			bool comboBoxEdit = (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
-			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-			bool noFocusRect = (e.State & DrawItemState.NoFocusRect) == DrawItemState.NoFocusRect;
-			bool disabled = (e.State & DrawItemState.Disabled) == DrawItemState.Disabled;
-			bool focus = (e.State & DrawItemState.Focus) == DrawItemState.Focus;
+			var comboBoxEdit = (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;
+			var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+			var noFocusRect = (e.State & DrawItemState.NoFocusRect) == DrawItemState.NoFocusRect;
+			var disabled = (e.State & DrawItemState.Disabled) == DrawItemState.Disabled;
+			var focus = (e.State & DrawItemState.Focus) == DrawItemState.Focus;
 
 			// determine grouping
 			string groupText;
-			bool isGroupStart = IsGroupStart(e.Index, out groupText) && !comboBoxEdit;
-			bool hasGroup = (groupText != String.Empty) && !comboBoxEdit;
+			var isGroupStart = IsGroupStart(e.Index, out groupText) && !comboBoxEdit;
+			var hasGroup = (groupText != String.Empty) && !comboBoxEdit;
 
 			// the item text will appear in a different colour, depending on its state
 			Color textColor;
@@ -499,13 +499,13 @@ public class GroupedComboBox : ComboBox, IComparer {
 				textColor = ForeColor;
 
 			// items will be indented if they belong to a group
-			Rectangle itemBounds = Rectangle.FromLTRB(
+			var itemBounds = Rectangle.FromLTRB(
 				e.Bounds.X + (hasGroup ? 12 : 0), 
 				e.Bounds.Y + (isGroupStart ? (e.Bounds.Height / 2) : 0), 
 				e.Bounds.Right, 
 				e.Bounds.Bottom
 			);
-			Rectangle groupBounds = new Rectangle(
+			var groupBounds = new Rectangle(
 				e.Bounds.X, 
 				e.Bounds.Y, 
 				e.Bounds.Width, 
@@ -609,7 +609,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 
 		// rebuild the collection and sort using custom logic
 		_internalItems.Clear();
-		foreach (object item in _bindingSource) _internalItems.Add(item);
+		foreach (var item in _bindingSource) _internalItems.Add(item);
 		_internalItems.Sort(this);
 
 		// bind the underlying ComboBox to the sorted collection
@@ -655,7 +655,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 				try {
 					Rectangle cBounds = RectangleToScreen(ClientRectangle);
 
-					Rectangle r = new Rectangle();
+					var r = new Rectangle();
 					NativeMethods.GetWindowRect(m.LParam, ref r);
 
 					// only adjust height when drop-down appears below the control (not "drop-up")
@@ -673,9 +673,9 @@ public class GroupedComboBox : ComboBox, IComparer {
 						}
 
 						// height of items plus 2 pixels for the border
-						int newHeight = 2;
-						for (int i = 0; i < Items.Count; i++) {
-							int proposedHeight = newHeight + GetItemHeight(i);
+						var newHeight = 2;
+						for (var i = 0; i < Items.Count; i++) {
+							var proposedHeight = newHeight + GetItemHeight(i);
 							if (proposedHeight > maxHeight) break;
 							newHeight = proposedHeight;
 						}
@@ -716,7 +716,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 		comboBounds.Inflate(1, 1);
 		ButtonRenderer.DrawButton(graphics, comboBounds, GetPushButtonState(state));
 
-		Rectangle buttonBounds = new Rectangle(
+		var buttonBounds = new Rectangle(
 			bounds.Left + (bounds.Width - 17),
 			bounds.Top,
 			17,
@@ -743,7 +743,7 @@ public class GroupedComboBox : ComboBox, IComparer {
 		
 		DrawComboBox(e.Graphics, ClientRectangle, e.State);
 
-		Rectangle itemBounds = new Rectangle(0, 0, Width - 21, Height);
+		var itemBounds = new Rectangle(0, 0, Width - 21, Height);
 		itemBounds.Inflate(-1, -3);
 		itemBounds.Offset(2, 0);
 

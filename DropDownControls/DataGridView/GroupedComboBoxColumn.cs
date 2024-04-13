@@ -82,11 +82,11 @@ namespace DropDownControls {
 		/// </summary>
 		/// <returns></returns>
 		public override object Clone() {
-			GroupedComboBoxColumn that = (GroupedComboBoxColumn)base.Clone();
-			that.DisplayMember = this.DisplayMember;
-			that.ValueMember = this.ValueMember;
-			that.GroupMember = this.GroupMember;
-			that.DataSource = this.DataSource;
+			var that = (GroupedComboBoxColumn)base.Clone();
+			that.DisplayMember = DisplayMember;
+			that.ValueMember = ValueMember;
+			that.GroupMember = GroupMember;
+			that.DataSource = DataSource;
 			return that;
 		}
 	}
@@ -190,7 +190,7 @@ namespace DropDownControls {
 					dispFormatter = o => Convert.ToString(o);
 				}
 
-				foreach (object item in (IList)ListBindingHelper.GetList(DataSource)) {
+				foreach (var item in (IList)ListBindingHelper.GetList(DataSource)) {
 					if (String.Compare(Convert.ToString(formattedValue), dispFormatter(item), true, CultureInfo.CurrentCulture) == 0) {
 						listItem = item;
 						break;
@@ -231,7 +231,7 @@ namespace DropDownControls {
 
 				if (!String.IsNullOrEmpty(ValueMember)) {
 					PropertyDescriptor pd = ListBindingHelper.GetListItemProperties(DataSource)[ValueMember];
-					foreach (object item in (IList)ListBindingHelper.GetList(DataSource)) {
+					foreach (var item in (IList)ListBindingHelper.GetList(DataSource)) {
 						if (Object.Equals(value, pd.GetValue(item))) {
 							listItem = item;
 							break;
@@ -259,11 +259,11 @@ namespace DropDownControls {
 		/// </summary>
 		/// <returns></returns>
 		public override object Clone() {
-			GroupedComboBoxCell that = (GroupedComboBoxCell)base.Clone();
-			that.DisplayMember = this.DisplayMember;
-			that.ValueMember = this.ValueMember;
-			that.GroupMember = this.GroupMember;
-			that.DataSource = this.DataSource;
+			var that = (GroupedComboBoxCell)base.Clone();
+			that.DisplayMember = DisplayMember;
+			that.ValueMember = ValueMember;
+			that.GroupMember = GroupMember;
+			that.DataSource = DataSource;
 			return that;
 		}
 
@@ -276,7 +276,7 @@ namespace DropDownControls {
 		public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle) {
 			base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
 
-			GroupedComboBoxEditingControl control = DataGridView.EditingControl as GroupedComboBoxEditingControl;
+			var control = DataGridView.EditingControl as GroupedComboBoxEditingControl;
 
 			if (control != null) {
 				control.BeginUpdate();
@@ -345,7 +345,7 @@ namespace DropDownControls {
 			
 			// background colour
 			if (dataGridViewCellStyle.BackColor.A < 255) {
-				Color opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
+				var opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
 				BackColor = opaqueBackColor;
 				((IDataGridViewEditingControl)this).EditingControlDataGridView.EditingPanel.BackColor = opaqueBackColor;
 			}
@@ -367,13 +367,13 @@ namespace DropDownControls {
 				return ((IDataGridViewEditingControl)this).GetEditingControlFormattedValue(DataGridViewDataErrorContexts.Formatting); 
 			}
 			set {
-				string valueStr = value as string;
+				var valueStr = value as string;
 
 				if (valueStr != null) {
-					this.Text = valueStr;
+					Text = valueStr;
 
 					if (String.Compare(valueStr, Text, true, CultureInfo.CurrentCulture) != 0) {
-						this.SelectedIndex = -1;
+						SelectedIndex = -1;
 					}
 				}
 			}

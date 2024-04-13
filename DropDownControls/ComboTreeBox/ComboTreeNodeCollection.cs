@@ -20,7 +20,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	{
 		if (!reverse)
 		{
-			for (int i = 0; i < collection.Count; i++)
+			for (var i = 0; i < collection.Count; i++)
 			{
 				yield return collection[i];
 				IEnumerator<ComboTreeNode> e = GetNodesRecursive(collection[i].Nodes, reverse);
@@ -29,7 +29,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 		}
 		else
 		{
-			for (int i = (collection.Count - 1); i >= 0; i--)
+			for (var i = (collection.Count - 1); i >= 0; i--)
 			{
 				IEnumerator<ComboTreeNode> e = GetNodesRecursive(collection[i].Nodes, reverse);
 				while (e.MoveNext()) yield return e.Current;
@@ -82,7 +82,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	/// <returns></returns>
 	public ComboTreeNode Add(string text)
 	{
-		ComboTreeNode item = new ComboTreeNode(text);
+		var item = new ComboTreeNode(text);
 		Add(item);
 		return item;
 	}
@@ -95,7 +95,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	/// <returns></returns>
 	public ComboTreeNode Add(string name, string text)
 	{
-		ComboTreeNode item = new ComboTreeNode(name, text);
+		var item = new ComboTreeNode(name, text);
 		Add(item);
 		return item;
 	}
@@ -137,7 +137,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	/// <returns></returns>
 	public bool Remove(string name)
 	{
-		for (int i = 0; i < _innerList.Count; i++)
+		for (var i = 0; i < _innerList.Count; i++)
 		{
 			if (Object.Equals(_innerList[i].Name, name))
 			{
@@ -160,10 +160,10 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
    public static ComboTreeNodeCollection ConvertFromTreeNodeCollection(TreeNodeCollection tnc)
    {
       ComboTreeNodeCollection ctnc = null;
-      for (int i = 0; i < tnc.Count; i++)
+      for (var i = 0; i < tnc.Count; i++)
       {
          TreeNode tn = tnc[i];
-         ComboTreeNode ctn = new ComboTreeNode();
+         var ctn = new ComboTreeNode();
          ctn.Text = tn.Text;
          ctn.Tag = tn.Tag;
          ctn.Name = tn.Name;
@@ -187,7 +187,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
    /// <returns></returns>
    public static ComboTreeNode ConvertFromTreeNode(TreeNode tn)
    {
-      ComboTreeNode ctn = new ComboTreeNode();
+      var ctn = new ComboTreeNode();
       ctn.Text = tn.Text;
       ctn.Tag = tn.Tag;
       ctn.Name = tn.Name;
@@ -206,7 +206,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	/// <returns></returns>
 	public int IndexOf(string name)
 	{
-		for (int i = 0; i < _innerList.Count; i++)
+		for (var i = 0; i < _innerList.Count; i++)
 		{
 			if (Object.Equals(_innerList[i].Name, name)) return i;
 		}
@@ -257,7 +257,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 		item.Nodes.CollectionChanged += CollectionChanged;
 		item.Nodes.AfterCheck += AfterCheck;
 
-		foreach (var node in item.Nodes)
+		foreach (ComboTreeNode node in item.Nodes)
 		{
 			AddEventHandlers(node);
 		}
@@ -273,7 +273,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 		item.Nodes.CollectionChanged -= CollectionChanged;
 		item.Nodes.AfterCheck -= AfterCheck;
 
-		foreach (var node in item.Nodes)
+		foreach (ComboTreeNode node in item.Nodes)
 		{
 			RemoveEventHandlers(node);
 		}
@@ -299,8 +299,8 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 	{
 		ComboTreeNode select = null;
 
-		string[] parts = path.Split(new string[] { pathSeparator }, StringSplitOptions.RemoveEmptyEntries);
-		for (int i = 0; i < parts.Length; i++)
+		var parts = path.Split(new string[] { pathSeparator }, StringSplitOptions.RemoveEmptyEntries);
+		for (var i = 0; i < parts.Length; i++)
 		{
 			ComboTreeNodeCollection collection = ((select == null) ? this : select.Nodes);
 			if (useNodeNamesForPath)
@@ -316,7 +316,7 @@ public class ComboTreeNodeCollection : IList<ComboTreeNode>, IList, INotifyColle
 			}
 			else
 			{
-				bool found = false;
+				var found = false;
 				foreach (ComboTreeNode node in collection)
 				{
 					if (node.Text.Equals(parts[i], StringComparison.InvariantCultureIgnoreCase))

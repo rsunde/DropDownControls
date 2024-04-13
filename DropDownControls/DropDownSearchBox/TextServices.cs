@@ -236,7 +236,7 @@ public class TextServices {
 				_causedMouseDown = true;
 			}
 			else if (e.Button == MouseButtons.Right) {
-				int index = CharacterHitTest(e.Location);
+				var index = CharacterHitTest(e.Location);
 				if ((index < SelectionStart) || (index >= (SelectionStart + SelectionLength))) {
 					Select(index, 0);
 				}
@@ -296,7 +296,7 @@ public class TextServices {
 	/// <param name="e"></param>
 	public void HandleKeyDown(KeyEventArgs e) {
 		if (_active) {
-			bool handled = true;
+			var handled = true;
 
 			if (e.Control && (e.KeyCode == Keys.V)) {
 				// paste
@@ -412,11 +412,11 @@ public class TextServices {
 		Rectangle rect = _boundsCallback();
 		rect.Inflate(-3, -3);
 
-		string text = _searchText.ToString();
+		var text = _searchText.ToString();
 
 		if ((location.X <= rect.X) || (text.Length == 0)) return 0;
 
-		for (int i = 1; i < _searchText.Length; i++) {
+		for (var i = 1; i < _searchText.Length; i++) {
 			Size sz = TextRenderer.MeasureText(text.Substring(0, i), Owner.Font, rect.Size, _textFormatFlags);
 			sz.Width -= 6;
 			if (location.X <= (rect.X + sz.Width)) return i;
@@ -479,9 +479,9 @@ public class TextServices {
 		Rectangle rect = _boundsCallback();
 		rect.Inflate(-3, -3);
 
-		string caretText = _searchText.ToString().Substring(0, _cpActive);
+		var caretText = _searchText.ToString().Substring(0, _cpActive);
 		Size sz = TextRenderer.MeasureText(caretText, Owner.Font, rect.Size, _textFormatFlags);
-		Point caretPos = new Point(rect.X + Math.Max(0, sz.Width - 7), rect.Y + ((rect.Height - Owner.Font.Height) / 2));
+		var caretPos = new Point(rect.X + Math.Max(0, sz.Width - 7), rect.Y + ((rect.Height - Owner.Font.Height) / 2));
 
 		if (rect.Contains(caretPos)) {
 			NativeMethods.SetCaretPos(caretPos.X, caretPos.Y);
@@ -496,7 +496,7 @@ public class TextServices {
 	/// Cuts the selection to the clipboard.
 	/// </summary>
 	public void Cut() {
-		string text = _searchText.ToString();
+		var text = _searchText.ToString();
 		Clipboard.SetText(text.Substring(SelectionStart, SelectionLength));
 		_searchText.Remove(SelectionStart, SelectionLength);
 		Select(SelectionStart, 0);
@@ -507,7 +507,7 @@ public class TextServices {
 	/// Copies the selection to the clipboard.
 	/// </summary>
 	public void Copy() {
-		string text = _searchText.ToString();
+		var text = _searchText.ToString();
 		Clipboard.SetText(text.Substring(SelectionStart, SelectionLength));
 	}
 
@@ -519,7 +519,7 @@ public class TextServices {
 		_searchText.Remove(SelectionStart, SelectionLength);
 		Select(SelectionStart, 0);
 
-		string inserted = Clipboard.GetText();
+		var inserted = Clipboard.GetText();
 
 		if (SelectionStart < _searchText.Length)
 			_searchText.Insert(SelectionStart, inserted);
@@ -538,7 +538,7 @@ public class TextServices {
 		Rectangle rect = _boundsCallback();
 		rect.Inflate(-3, -3);
 
-		string text = _searchText.ToString();
+		var text = _searchText.ToString();
 
 		TextRenderer.DrawText(graphics, text, Owner.Font, rect, Owner.ForeColor, _textFormatFlags);
 

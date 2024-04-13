@@ -78,8 +78,8 @@ internal static class Interop {
 
 		IntPtr hdc = graphics.GetHdc();
 		try {
-			int iMode = SetMapMode(hdc, MM_TEXT);
-			RECT rect = new RECT() { left = r.Left, top = r.Top, right = r.Right, bottom = r.Bottom };
+			var iMode = SetMapMode(hdc, MM_TEXT);
+			var rect = new RECT() { left = r.Left, top = r.Top, right = r.Right, bottom = r.Bottom };
 			DrawFocusRect(new HandleRef(graphics, hdc), ref rect);
 			if (iMode != MM_TEXT) SetMapMode(hdc, iMode);
 		}

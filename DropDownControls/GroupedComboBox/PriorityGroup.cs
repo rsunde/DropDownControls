@@ -53,7 +53,7 @@ namespace DropDownControls {
 		/// <param name="obj"></param>
 		/// <returns></returns>
 		public override bool Equals(object obj) {
-			PriorityGroup that = obj as PriorityGroup;
+			var that = obj as PriorityGroup;
 			if (that != null)
 				return Equals(that);
 			else
@@ -66,7 +66,7 @@ namespace DropDownControls {
 		/// <param name="that"></param>
 		/// <returns></returns>
 		public bool Equals(PriorityGroup that) {
-			return (this.Priority == that.Priority) && this.Heading.Equals(that.Heading);
+			return (Priority == that.Priority) && Heading.Equals(that.Heading);
 		}
 
 		/// <summary>
@@ -123,24 +123,24 @@ namespace DropDownControls {
 		/// <param name="fallback"></param>
 		/// <returns></returns>
 		internal static int Compare(object x, object y, IComparer fallback) {
-			object headingX = x;
-			object headingY = y;
-			int priorityX = 1;
-			int priorityY = 1;
+			var headingX = x;
+			var headingY = y;
+			var priorityX = 1;
+			var priorityY = 1;
 
-			PriorityGroup gX = x as PriorityGroup;
+			var gX = x as PriorityGroup;
 			if (gX != null) {
 				headingX = gX.Heading;
 				priorityX = gX.Priority;
 			}
 
-			PriorityGroup gY = y as PriorityGroup;
+			var gY = y as PriorityGroup;
 			if (gY != null) {
 				headingY = gY.Heading;
 				priorityY = gY.Priority;
 			}
 
-			int result = fallback.Compare(priorityX, priorityY);
+			var result = fallback.Compare(priorityX, priorityY);
 			if (result == 0)
 				return fallback.Compare(headingX, headingY);
 			else

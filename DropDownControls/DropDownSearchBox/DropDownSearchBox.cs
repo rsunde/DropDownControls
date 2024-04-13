@@ -351,7 +351,7 @@ public class DropDownSearchBox : ComboTreeBox {
 		}
 
 		if (e.KeyCode == Keys.Tab) {
-			Message fake = new Message() { HWnd = Handle, Msg = 0x0100, WParam = new IntPtr((int)e.KeyData), LParam = IntPtr.Zero, Result = IntPtr.Zero };
+			var fake = new Message() { HWnd = Handle, Msg = 0x0100, WParam = new IntPtr((int)e.KeyData), LParam = IntPtr.Zero, Result = IntPtr.Zero };
 			ProcessCmdKey(ref fake, e.KeyData);
 			e.Handled = true;
 			e.SuppressKeyPress = true;
@@ -469,14 +469,14 @@ public class DropDownSearchBox : ComboTreeBox {
 				EndUpdate();
 
 				_cts = new CancellationTokenSource();
-				ComboTreeNodeCollection results = new ComboTreeNodeCollection(null);
+				var results = new ComboTreeNodeCollection(null);
 
-				var task = Task.Factory.StartNew(() => OnPerformSearch(new PerformSearchEventArgs(_services.Text, _cts.Token, results)), _cts.Token);
+                Task task = Task.Factory.StartNew(() => OnPerformSearch(new PerformSearchEventArgs(_services.Text, _cts.Token, results)), _cts.Token);
 
 				task.ContinueWith(t => {
 					if (t.IsFaulted) {
 						results.Clear();
-						string errorText = t.Exception.InnerExceptions.Select(x => x.Message).FirstOrDefault() ?? "an error occured";
+						var errorText = t.Exception.InnerExceptions.Select(x => x.Message).FirstOrDefault() ?? "an error occured";
 						results.Add(new ComboTreeNode(String.Format("({0})", errorText)) { Selectable = false, FontStyle = FontStyle.Italic });
 					}
 
@@ -489,7 +489,7 @@ public class DropDownSearchBox : ComboTreeBox {
 				// wait until the search term is long enough
 				BeginUpdate();
 				Nodes.Clear();
-				string msg = String.Format("(type at least {0} characters)", MinSearchTermLength);
+				var msg = String.Format("(type at least {0} characters)", MinSearchTermLength);
 				Nodes.Add(new ComboTreeNode(msg) { Selectable = false, FontStyle = FontStyle.Italic });
 				EndUpdate();
 			}

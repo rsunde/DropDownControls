@@ -69,7 +69,7 @@ public class ComboTreeBox : DropDownControlBase
 		}
 		set
 		{
-			bool diff = (_cascadeCheckState != value);
+			var diff = (_cascadeCheckState != value);
 			_cascadeCheckState = value;
 
 			if (diff && _cascadeCheckState)
@@ -591,7 +591,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	private ComboTreeNode GetNextDisplayedNode()
 	{
-		bool started = false;
+		var started = false;
 		IEnumerator<ComboTreeNode> e = ComboTreeNodeCollection.GetNodesRecursive(_nodes, false);
 		while (e.MoveNext())
 		{
@@ -614,7 +614,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	private ComboTreeNode GetPrevDisplayedNode()
 	{
-		bool started = false;
+		var started = false;
 		IEnumerator<ComboTreeNode> e = ComboTreeNodeCollection.GetNodesRecursive(_nodes, true);
 		while (e.MoveNext())
 		{
@@ -637,7 +637,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	public ComboTreeNode GetNextSelectableNode()
 	{
-		bool started = false;
+		var started = false;
 		IEnumerator<ComboTreeNode> e = ComboTreeNodeCollection.GetNodesRecursive(_nodes, false);
 		while (e.MoveNext())
 		{
@@ -660,7 +660,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	public ComboTreeNode GetPrevSelectableNode()
 	{
-		bool started = false;
+		var started = false;
 		IEnumerator<ComboTreeNode> e = ComboTreeNodeCollection.GetNodesRecursive(_nodes, true);
 		while (e.MoveNext())
 		{
@@ -732,7 +732,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	internal bool IsNodeVisible(ComboTreeNode node)
 	{
-		bool displayed = true;
+		var displayed = true;
 		ComboTreeNode parent = node;
 		while ((parent = parent.Parent) != null)
 		{
@@ -762,7 +762,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <param name="e"></param>
 	protected override void OnMouseWheel(MouseEventArgs e)
 	{
-		HandledMouseEventArgs he = (HandledMouseEventArgs)e;
+		var he = (HandledMouseEventArgs)e;
 		he.Handled = true;
 
 		base.OnMouseWheel(e);
@@ -849,14 +849,14 @@ public class ComboTreeBox : DropDownControlBase
 		base.OnPaintContent(e);
 
 		Image img = GetNodeImage(_selectedNode);
-		string text = _nullValue;
+		var text = _nullValue;
 		if (_showCheckBoxes)
 			text = GetCheckedNodeString();
 		else if (_selectedNode != null)
 			text = (_showPath) ? Path : _selectedNode.Text;
 
 		Rectangle imgBounds = (img == null) ? new Rectangle(1, 0, 0, 0) : new Rectangle(4, e.Bounds.Height / 2 - img.Height / 2, img.Width, img.Height);
-		Rectangle txtBounds = new Rectangle(imgBounds.Right, 0, e.Bounds.Width - imgBounds.Right - 3, e.Bounds.Height);
+		var txtBounds = new Rectangle(imgBounds.Right, 0, e.Bounds.Width - imgBounds.Right - 3, e.Bounds.Height);
 
 		if (img != null) e.Graphics.DrawImage(img, imgBounds);
 
@@ -911,7 +911,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <returns></returns>
 	protected virtual string GetCheckedNodeString()
 	{
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 
 		foreach (ComboTreeNode node in CheckedNodes)
 		{
@@ -1019,7 +1019,7 @@ public class ComboTreeBox : DropDownControlBase
 	/// <param name="comparer"></param>
 	public void Sort(IComparer<ComboTreeNode> comparer)
 	{
-		bool oldIsUpdating = _isUpdating;
+		var oldIsUpdating = _isUpdating;
 		_isUpdating = true;
 		_nodes.Sort(comparer);
 		if (!oldIsUpdating) EndUpdate();

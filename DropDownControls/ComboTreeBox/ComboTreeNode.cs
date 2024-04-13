@@ -141,7 +141,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	[Browsable(false)]
 	public int Depth {
 		get {
-			int depth = 0;
+			var depth = 0;
 			ComboTreeNode node = this;
 			while ((node = node._parent) != null) depth++;
 			return depth;
@@ -154,7 +154,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	public CheckState CheckState {
 		get { return _checkState; }
 		set {
-			bool diff = (_checkState != value);
+			var diff = (_checkState != value);
 			_checkState = value;
 			if (diff) OnCheckStateChanged();
 		}
@@ -225,7 +225,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// </summary>
 	/// <param name="text"></param>
 	public ComboTreeNode(string text) : this() {
-		this._text = text;
+		_text = text;
 	}
 
 	/// <summary>
@@ -234,8 +234,8 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// <param name="name"></param>
 	/// <param name="text"></param>
 	public ComboTreeNode(string name, string text) : this() {
-		this._text = text;
-		this._name = name;
+		_text = text;
+		_name = name;
 	}
 
 	/// <summary>
@@ -250,7 +250,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// </param>
 	/// <returns>The path string.</returns>
 	public string GetFullPath(string pathSeparator, bool useNodeNamesForPath) {
-		StringBuilder s = new StringBuilder();
+		var s = new StringBuilder();
 		ComboTreeNode node = this;
 
 		s.Append(useNodeNamesForPath ? node.Name : node.Text);
@@ -269,9 +269,9 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// <returns></returns>
 	internal CheckState GetAggregateCheckState() {
 		CheckState state = CheckState.Unchecked;
-		bool all = true;
-		bool any = false;
-		bool chk = false;
+		var all = true;
+		var any = false;
+		var chk = false;
 
 		foreach (ComboTreeNode child in Nodes) {
 			if (child.CheckState != CheckState.Unchecked) any = true;
@@ -314,7 +314,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 		ComboTreeNode that = Clone();
 
 		if (recursive) {
-			foreach (ComboTreeNode node in this.Nodes) {
+			foreach (ComboTreeNode node in Nodes) {
 				that.Nodes.Add(node.Clone(recursive));
 			}
 		}
@@ -327,21 +327,21 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// </summary>
 	/// <returns></returns>
 	public virtual ComboTreeNode Clone() {
-		ComboTreeNode that = (ComboTreeNode)Activator.CreateInstance(GetType());
+		var that = (ComboTreeNode)Activator.CreateInstance(GetType());
 
-		that.Name = this.Name;
-		that.Text = this.Text;
-		that.CheckState = this.CheckState;
-		that.Expanded = this.Expanded;
-		that.ExpandedImageIndex = this.ExpandedImageIndex;
-		that.ExpandedImageKey = this.ExpandedImageKey;
-		that.ForeColor = this.ForeColor;
-		that.FontStyle = this.FontStyle;
-		that.ImageIndex = this.ImageIndex;
-		that.ImageKey = this.ImageKey;
-		that.Selectable = this.Selectable;
-		that.Tag = this.Tag;
-		that.Cursor = this.Cursor;
+		that.Name = Name;
+		that.Text = Text;
+		that.CheckState = CheckState;
+		that.Expanded = Expanded;
+		that.ExpandedImageIndex = ExpandedImageIndex;
+		that.ExpandedImageKey = ExpandedImageKey;
+		that.ForeColor = ForeColor;
+		that.FontStyle = FontStyle;
+		that.ImageIndex = ImageIndex;
+		that.ImageKey = ImageKey;
+		that.Selectable = Selectable;
+		that.Tag = Tag;
+		that.Cursor = Cursor;
 
 		return that;
 	}
@@ -366,7 +366,7 @@ public class ComboTreeNode : IComparable<ComboTreeNode>, ICloneable {
 	/// <param name="other"></param>
 	/// <returns></returns>
 	public int CompareTo(ComboTreeNode other) {
-		return StringComparer.InvariantCultureIgnoreCase.Compare(this._text, other._text);
+		return StringComparer.InvariantCultureIgnoreCase.Compare(_text, other._text);
 	}
 
 	#endregion

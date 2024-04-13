@@ -370,7 +370,7 @@ public abstract class DropDownControlBase : Control {
 	/// Updates the mouse cursor when the pointer moves over the control.
 	/// </summary>
 	private void UpdateCursor() {
-		bool test = GetTextBoxBounds().Contains(PointToClient(Cursor.Position));
+		var test = GetTextBoxBounds().Contains(PointToClient(Cursor.Position));
 		if (test != _mouseOverTextBox) {
 			_mouseOverTextBox = test;
 			Cursor = (_mouseOverTextBox && (DropDownStyle != DropDownControlStyles.Discrete))
@@ -456,7 +456,7 @@ public abstract class DropDownControlBase : Control {
 		comboBounds.Inflate(1, 1);
 		ButtonRenderer.DrawButton(graphics, comboBounds, GetPushButtonState(state));
 
-		Rectangle buttonBounds = new Rectangle(
+		var buttonBounds = new Rectangle(
 			bounds.Left + (bounds.Width - 17),
 			bounds.Top,
 			17,
@@ -507,10 +507,10 @@ public abstract class DropDownControlBase : Control {
 		}
 		else if (Environment.OSVersion.Version >= new Version(10, 0)) {
 			// windows 10 uses a slightly different chevron glyph
-			int mX = bounds.X + (bounds.Width / 2);
-			int mY = bounds.Y + (bounds.Height / 2);
+			var mX = bounds.X + (bounds.Width / 2);
+			var mY = bounds.Y + (bounds.Height / 2);
 
-			using (Pen pen = new Pen(color ?? Color.FromArgb(66, 66, 66), 1)) {
+			using (var pen = new Pen(color ?? Color.FromArgb(66, 66, 66), 1)) {
 				g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
 				g.DrawLine(pen, mX - 4, mY - 2, mX - 1, mY + 1);
@@ -522,15 +522,15 @@ public abstract class DropDownControlBase : Control {
 		}
 		else if (Environment.OSVersion.Version >= new Version(6, 2)) {
 			// windows 8 uses a chevron glyph
-			int mX = bounds.X + (bounds.Width / 2);
-			int mY = bounds.Y + (bounds.Height / 2);
-			using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath()) {
+			var mX = bounds.X + (bounds.Width / 2);
+			var mY = bounds.Y + (bounds.Height / 2);
+			using (var path = new System.Drawing.Drawing2D.GraphicsPath()) {
 				path.AddLine(mX - 3, mY - 2, mX - 3, mY - 1);
 				path.AddLine(mX - 3, mY - 1, mX, mY + 2);
 				path.AddLine(mX, mY + 2, mX + 3, mY - 1);
 				path.AddLine(mX + 3, mY - 1, mX + 3, mY - 2);
 
-				using (Pen pen = new Pen(color ?? Color.FromArgb(66, 66, 66), 2)) {
+				using (var pen = new Pen(color ?? Color.FromArgb(66, 66, 66), 2)) {
 					pen.StartCap = System.Drawing.Drawing2D.LineCap.Flat;
 					pen.EndCap = System.Drawing.Drawing2D.LineCap.Flat;
 

@@ -112,7 +112,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	/// </summary>
 	/// <returns></returns>
 	private Point CalcDropDownLocation() {
-		Point location = new Point(0, _sourceControl.ClientRectangle.Height);
+		var location = new Point(0, _sourceControl.ClientRectangle.Height);
 		Rectangle workingArea = Screen.FromControl(_sourceControl).WorkingArea;
 
 		if ((_sourceControl.PointToScreen(location).Y + Height) > workingArea.Bottom) {
@@ -161,11 +161,11 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	/// <returns></returns>
 	private int GetHourAtPoint(Point p) {
 		Point o = GetOrigin();
-		double distance = Math.Sqrt(Math.Pow(p.X - o.X, 2) + Math.Pow(p.Y - o.Y, 2));
+		var distance = Math.Sqrt(Math.Pow(p.X - o.X, 2) + Math.Pow(p.Y - o.Y, 2));
 
 		if (distance != 0) {
-			double radians = Math.Acos((o.Y - p.Y) / distance);
-			double angle = radians * (180 / Math.PI);
+			var radians = Math.Acos((o.Y - p.Y) / distance);
+			var angle = radians * (180 / Math.PI);
 
 			if (p.X < o.X) {
 				angle = (360 - angle) + (360 / 24);
@@ -174,7 +174,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 				angle += (360 / 24);
 			}
 
-			int hour = (int)(angle / (360 / 12));
+			var hour = (int)(angle / (360 / 12));
 			if (hour <= 6)
 				return hour + 12;
 			else
@@ -192,11 +192,11 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	/// <returns></returns>
 	private int GetMinuteAtPoint(Point p) {
 		Point o = GetOrigin();
-		double distance = Math.Sqrt(Math.Pow(p.X - o.X, 2) + Math.Pow(p.Y - o.Y, 2));
+		var distance = Math.Sqrt(Math.Pow(p.X - o.X, 2) + Math.Pow(p.Y - o.Y, 2));
 
 		if (distance != 0) {
-			double radians = Math.Acos((o.Y - p.Y) / distance);
-			double angle = radians * (180 / Math.PI);
+			var radians = Math.Acos((o.Y - p.Y) / distance);
+			var angle = radians * (180 / Math.PI);
 
 			if (p.X < o.X) angle = (360 - angle);
 
@@ -275,10 +275,10 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	}
 
 	private Point GetRadialPoint(Point origin, double angle, double radius) {
-		double radians = angle * (Math.PI / 180);
+		var radians = angle * (Math.PI / 180);
 
-		double x = Math.Sin(radians) * radius;
-		double y = Math.Cos(radians) * radius;
+		var x = Math.Sin(radians) * radius;
+		var y = Math.Cos(radians) * radius;
 
 		return new Point(origin.X + (int)x, origin.Y - (int)y);
 	}
@@ -292,7 +292,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		Rectangle r = GetClockBounds();
 
 		if (r.Contains(p)) {
-			Point center = new Point(r.X + (r.Width / 2), r.Y + (r.Height / 2));
+			var center = new Point(r.X + (r.Width / 2), r.Y + (r.Height / 2));
 
 			double _xRadius = r.Width / 2;
 			double _yRadius = r.Height / 2;
@@ -304,7 +304,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
              * X^2/a^2 + Y^2/b^2 <= 1
              */
 
-			Point normalized = new Point(p.X - center.X, p.Y - center.Y);
+			var normalized = new Point(p.X - center.X, p.Y - center.Y);
 
 			return ((double)(normalized.X * normalized.X) / (_xRadius * _xRadius)) + ((double)(normalized.Y * normalized.Y) / (_yRadius * _yRadius)) <= 1.0;
 		}
@@ -337,17 +337,17 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		g.DrawEllipse(SystemPens.ControlDark, r);
 
 		double radius = r.Width / 2;
-		Point origin = new Point(r.X + (r.Width) / 2, r.Y + (r.Height / 2));
-		using (GraphicsPath clipPath = new GraphicsPath()) {
+		var origin = new Point(r.X + (r.Width) / 2, r.Y + (r.Height / 2));
+		using (var clipPath = new GraphicsPath()) {
 			if (_value.HasValue) {
 				// draw the hour and minute hands
-				double hourAngle = (_value.Value.Hours % 12) * (360.0 / 12.0);
-				double minAngle = (_value.Value.Minutes) * (360.0 / 60.0);
+				var hourAngle = (_value.Value.Hours % 12) * (360.0 / 12.0);
+				var minAngle = (_value.Value.Minutes) * (360.0 / 60.0);
 				Point p;
 
 				Color color = SystemColors.Highlight;
 
-				using (Pen pen = new Pen(color, 2f)) {
+				using (var pen = new Pen(color, 2f)) {
 					pen.StartCap = pen.EndCap = LineCap.Round;
 
 					if (_selectMinutes) {
@@ -359,7 +359,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 				}
 
 				// outer ring
-				Rectangle ring = new Rectangle(p.X - 12, p.Y - 12, 24, 24);
+				var ring = new Rectangle(p.X - 12, p.Y - 12, 24, 24);
 				g.FillEllipse(SystemBrushes.Highlight, ring);
 				clipPath.AddEllipse(ring);
 
@@ -368,7 +368,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 			}
 
 			// draw the hour/minute markings
-			for (int i = 0; i < 12; i++) {
+			for (var i = 0; i < 12; i++) {
 				double angle = i * (360 / 12);
 
 				bool selected;
@@ -384,8 +384,8 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 
 				Point p = GetRadialPoint(origin, angle, radius - 12);
 				Point mpos = PointToClient(Cursor.Position);
-				bool hot = false;
-				Rectangle ring = new Rectangle(p.X - 12, p.Y - 12, 24, 24);
+				var hot = false;
+				var ring = new Rectangle(p.X - 12, p.Y - 12, 24, 24);
 
 				Action drawHotRing = () => {
 					WithPen(WinVistaColorTable.HotBorder, pen => g.DrawLine(pen, origin, GetRadialPoint(origin, angle, radius - 12)));
@@ -417,7 +417,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 					g.ResetClip();
 
 					// text outside the circle
-					using (Region reg = new Region(clipPath)) {
+					using (var reg = new Region(clipPath)) {
 						g.ExcludeClip(reg);
 						if (hot) drawHotRing();
 						g.DrawString(t, _clockFont, SystemBrushes.ControlText, p);
@@ -435,7 +435,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		if (!_value.HasValue) {
 			TextFormatFlags tff = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
 			r.Offset(1, 1);
-			using (Font italicFont = new Font(_clockFont, FontStyle.Italic)) {
+			using (var italicFont = new Font(_clockFont, FontStyle.Italic)) {
 				TextRenderer.DrawText(g, _selectMinutes ? "Click to\nset minute" : "Click to\nset hour", italicFont, r, Color.Gray, tff);
 			}
 		}
@@ -443,8 +443,8 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		g.SmoothingMode = SmoothingMode.Default;
 
 		// am/pm and now buttons
-		bool isPM = _value.HasValue && (_value.Value.Hours >= 12);
-		bool isAM = _value.HasValue && (_value.Value.Hours < 12);
+		var isPM = _value.HasValue && (_value.Value.Hours >= 12);
+		var isAM = _value.HasValue && (_value.Value.Hours < 12);
 
 		FillAndDrawWithText(g, !_selectMinutes, "HH", _clockFont, hh);
 		FillAndDrawWithText(g, _selectMinutes, "mm", _clockFont, mm);
@@ -494,7 +494,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	/// <param name="color"></param>
 	/// <param name="action"></param>
 	private void WithPen(Color color, Action<Pen> action) {
-		using (Pen p = new Pen(color)) {
+		using (var p = new Pen(color)) {
 			action(p);
 		}
 	}
@@ -549,14 +549,14 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 	/// <param name="roundMins">Whether to round to the nearest 5 minutes.</param>
 	private void UpdateValue(Point p, bool roundMins) {
 		if (_selectMinutes) {
-			int m = GetMinuteAtPoint(p);
+			var m = GetMinuteAtPoint(p);
 			if (roundMins) {
 				m = (int)(Math.Round(m / 5.0) * 5) % 60;
 			}
 			Value = new TimeSpan(_value.HasValue ? _value.Value.Hours : 0, m, 0);
 		}
 		else {
-			int h = GetHourAtPoint(p);
+			var h = GetHourAtPoint(p);
 			Value = new TimeSpan(h, _value.HasValue ? _value.Value.Minutes : 0, 0);
 		}
 	}
@@ -585,13 +585,13 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		}
 		else if (keyCode == Keys.Left) {
 			if (_selectMinutes) {
-				int m = _value.HasValue ? _value.Value.Minutes : 0;
+				var m = _value.HasValue ? _value.Value.Minutes : 0;
 				m -= modifiers.HasFlag(Keys.Shift) ? 5 : 1;
 				if (m < 0) m = 59;
 				Value = new TimeSpan(_value.HasValue ? _value.Value.Hours : 0, m, 0);
 			}
 			else {
-				int h = _value.HasValue ? _value.Value.Hours : 0;
+				var h = _value.HasValue ? _value.Value.Hours : 0;
 				h--;
 				if (h < 0) h = 23;
 				Value = new TimeSpan(h, _value.HasValue ? _value.Value.Minutes : 0, 0);
@@ -599,13 +599,13 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 		}
 		else if (keyCode == Keys.Right) {
 			if (_selectMinutes) {
-				int m = _value.HasValue ? _value.Value.Minutes : 0;
+				var m = _value.HasValue ? _value.Value.Minutes : 0;
 				m += modifiers.HasFlag(Keys.Shift) ? 5 : 1;
 				if (m > 59) m = 0;
 				Value = new TimeSpan(_value.HasValue ? _value.Value.Hours : 0, m, 0);
 			}
 			else {
-				int h = _value.HasValue ? _value.Value.Hours : 0;
+				var h = _value.HasValue ? _value.Value.Hours : 0;
 				h++;
 				if (h > 23) h = 0;
 				Value = new TimeSpan(h, _value.HasValue ? _value.Value.Minutes : 0, 0);
@@ -654,7 +654,7 @@ public class TimePickerDropDown<TSource> : ToolStripDropDown where TSource : Con
 
 		if ((e.Button == MouseButtons.Left) && InClockBounds(e.Location)) {
 			if (!_isDragging) {
-				int dist = (int)Math.Sqrt(Math.Pow((e.Location.X - _mouseDownPosition.X), 2) + Math.Pow((e.Location.Y - _mouseDownPosition.Y), 2));
+				var dist = (int)Math.Sqrt(Math.Pow((e.Location.X - _mouseDownPosition.X), 2) + Math.Pow((e.Location.Y - _mouseDownPosition.Y), 2));
 				if (dist >= 4) _isDragging = true;
 			}
 			if (_isDragging) UpdateValue(e.Location, false);
